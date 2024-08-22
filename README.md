@@ -1,12 +1,9 @@
 ## Deploy infrastructure 
 
 ### Required software
-Make sure terraform, azure cli, and azure function tools are installed 
-- https://learn.microsoft.com/en-us/cli/azure/install-azure-cli
-- https://developer.hashicorp.com/terraform/install
-- https://github.com/Azure/azure-functions-core-tools
-
-Also we need: 
+- azure-cli https://learn.microsoft.com/en-us/cli/azure/install-azure-cli
+- terraform https://developer.hashicorp.com/terraform/install
+- azure-function-core-toolshttps://github.com/Azure/azure-functions-core-tools
 - Visual Studio Code https://code.visualstudio.com/
 - Python extension https://marketplace.visualstudio.com/items?itemName=ms-python.python
 - Azure Functions extension https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions 
@@ -34,8 +31,8 @@ Set variables tenant_id, subscription_id, resource_group, and client_ip in terra
 ```
 tenant_id       = "<insert your tenant id here>"
 subscription_id = "<insert your subscription id here>"
-resource_group = "<insert your resource_group here>"
-client_ip      = "<insert your client_ip here>"
+resource_group  = "<insert your resource_group here>"
+client_ip       = "<insert your client_ip here>"
 ```
 
 ### Set SQL credentials in environment variables
@@ -112,7 +109,7 @@ cd synapse_resource_deployment directory
 
 ### Deploy the notebook and pipeline 
 ```
-.deploy_synapse_resources.sh
+./deploy_synapse_resources.sh
 ```
 ---
 ## Upload sample data to adls 
@@ -138,7 +135,7 @@ Notes:
 - Records that fail validation will be written to a report, you can find the report in the ADLS filesystem under the reports directory. NOTE: I had another fun way to create a pdf report. Unfortunately I had some issues with getting the external packages working in the pipeline (adding a requirement.txt file to the spark pool did not solve the issue). For this solution please check the ```pdf_report.py``` file to get an impression.
 - Successfull records will be written to the ```transactions``` table in the database created by terraform 
 - Records that failed validation will be written to the ```failed_transactions``` table in the database created by terraform 
-- IMPORTANT: For some reason sometimes errors like the one below prevent the pipeline from running successfully. A workaround for this is to manually recreate the pipeline with the same settings as the one that was deployed. 
+- IMPORTANT: For some reason sometimes errors like the one below prevent the pipeline from running successfully. A workaround for this is to manually recreate the pipeline with a different name and the same settings as the one that was deployed. 
 ```
 Operation on target load_customer_statement_records failed: Exception: Failed to create Livy session for executing notebook. 
 ```
@@ -190,11 +187,13 @@ Note: I would've preferred to also create some CLI script for this. The CLI tool
 
 ## Cleanup 
 ### Delete stuff that is not managed from Terraform 
+First go to synapse studio and delete the pipeline. Due to the $RANDOM part in the name of the creation script this should be done manually. The rest will be cleaned up scripted: 
+
 From the infrastructure directory, run the cleanup_resources.sh
 ```
 ./cleanup_resources.sh
 ```
-This will delete the pipeline and notebook from synapse and the folders on adls. This will allow for an easy terraform destroy 
+This will delete the notebook from synapse and the folders on adls. This will allow for an easy terraform destroy 
 
 ### Terraform destroy 
 From the terraform directory, run: 
@@ -202,3 +201,11 @@ From the terraform directory, run:
 terraform destroy 
 ```
 Note: If you have recreated the pipeline manually, you might have to delete this from synapse manually before running terraform destroy. 
+
+## Improvements that could be implemented
+- Use Managed Identities/Linked Service to connect from Synapse notebook to SQL Database
+- Use Managed Identities to connect from Azure function app to SQL Database 
+- Create a better deployment method for Azure function app code 
+- Implement logging / monitoring 
+- Implement source control in Synapse / automate deployments
+- Implement unit testing for notebook 
