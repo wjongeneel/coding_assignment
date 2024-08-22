@@ -12,9 +12,9 @@ resource "azurerm_mssql_database" "coding_assignment_db" {
   server_id = azurerm_mssql_server.coding_assignment_sql_server.id
   # nieuw
   geo_backup_enabled = false
-  license_type = "LicenseIncluded"
-  max_size_gb = 1
-  sku_name = "Basic"
+  license_type       = "LicenseIncluded"
+  max_size_gb        = 1
+  sku_name           = "Basic"
 
   lifecycle {
     prevent_destroy = false # set to false to allow for quick infrastructure cleanup, would set to true in production

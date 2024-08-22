@@ -51,7 +51,7 @@ resource "azurerm_storage_data_lake_gen2_path" "arriving_data" {
   filesystem_name    = azurerm_storage_data_lake_gen2_filesystem.coding_assignment_adls.name
   storage_account_id = azurerm_storage_account.coding_assignment.id
   resource           = "directory"
-   ace {
+  ace {
     id          = null
     permissions = "--x"
     scope       = "access"
@@ -89,7 +89,7 @@ resource "azurerm_storage_data_lake_gen2_path" "reports" {
   filesystem_name    = azurerm_storage_data_lake_gen2_filesystem.coding_assignment_adls.name
   storage_account_id = azurerm_storage_account.coding_assignment.id
   resource           = "directory"
-   ace {
+  ace {
     id          = null
     permissions = "--x"
     scope       = "access"

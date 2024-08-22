@@ -57,16 +57,16 @@ resource "azurerm_role_assignment" "adls-storage-contributor2" {
 
 # creates a sparkpool
 resource "azurerm_synapse_spark_pool" "coding_assignment_spark_pool" {
-  name = "sparkpool"
-  synapse_workspace_id = azurerm_synapse_workspace.coding_assignment_synapse.id
-  node_size_family = "MemoryOptimized"
-  node_size = "Small"
+  name                           = "sparkpool"
+  synapse_workspace_id           = azurerm_synapse_workspace.coding_assignment_synapse.id
+  node_size_family               = "MemoryOptimized"
+  node_size                      = "Small"
   session_level_packages_enabled = true
-  node_count = 3
-  cache_size = 50
+  node_count                     = 3
+  cache_size                     = 50
   auto_pause {
     delay_in_minutes = 5
   }
   dynamic_executor_allocation_enabled = false
-  spark_version = 3.4
+  spark_version                       = 3.4
 }
