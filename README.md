@@ -187,13 +187,11 @@ Note: I would've preferred to also create some CLI script for this. The CLI tool
 
 ## Cleanup 
 ### Delete stuff that is not managed from Terraform 
-First go to synapse studio and delete the pipeline. Due to the $RANDOM part in the name of the creation script this should be done manually. The rest will be cleaned up scripted: 
-
 From the infrastructure directory, run the cleanup_resources.sh
 ```
 ./cleanup_resources.sh
 ```
-This will delete the notebook from synapse and the folders on adls. This will allow for an easy terraform destroy 
+This will delete the pipeline and notebook from synapse and the folders on adls. This will allow for an easy terraform destroy 
 
 ### Terraform destroy 
 From the terraform directory, run: 
