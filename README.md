@@ -209,3 +209,4 @@ Note: If you have recreated the pipeline manually, you might have to delete this
 - Implement logging / monitoring 
 - Implement source control in Synapse / automate deployments
 - Implement unit testing for notebook 
+- Use private endpoints
