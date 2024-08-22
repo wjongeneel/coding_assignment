@@ -1,0 +1,3 @@
+#!/bin/bash
+export TF_VAR_sql_administrator_login=<set username for sql_administrator> 
+export TF_VAR_sql_administrator_login_password=<set password for sql_administrator>

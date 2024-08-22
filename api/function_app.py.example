@@ -1,0 +1,35 @@
+import azure.functions as func
+import logging
+import pyodbc 
+import os
+
+# Please note: for easy recreation of the coding assignment, I declare the variables directly. 
+# A more secure alternative would be to create environment variables within the Azure function 
+# app and looking them up as the example below: 
+# password = os.environ['SQL_PASSWORD'] 
+driver = "{ODBC Driver 18 for SQL Server}"
+server = "codingassignmentsqlserver.database.windows.net"
+database = "codingassignmentdb"
+username = "**********"
+password = "**********"
+
+connection_string = str.format(
+    "Driver={0};Server={1},1433;Database={2};Uid={3};Pwd={4}",
+    driver,
+    server,
+    database,
+    username,
+    password,
+)
+
+app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+
+@app.route(route="get_records")
+def get_records(req: func.HttpRequest) -> func.HttpResponse:
+    connection = pyodbc.connect(connection_string)
+    with connection.cursor() as cursor:
+        query_result = cursor.execute("SELECT * FROM transactions")
+        results = query_result.fetchall()
+        columns = [column[0] for column in query_result.description]
+        data = [dict(zip(columns, row)) for row in results]
+    return func.HttpResponse(str(data), status_code=200)

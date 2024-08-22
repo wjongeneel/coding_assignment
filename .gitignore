@@ -1,0 +1,10 @@
+.vscode/*
+.DS_Store
+infrastructure/terraform/.terraform
+infrastructure/terraform/.terraform.lock.hcl
+infrastructure/terraform/env_vars.sh
+infrastructure/terraform/terraform.tfstate
+infrastructure/terraform/terraform.tfstate.backup 
+infrastructure/terraform/terraform.tfvars
+pipeline/python/old
+pipeline/synapse_resource_deployment/deploy_synapse_resources_parameterized.sh

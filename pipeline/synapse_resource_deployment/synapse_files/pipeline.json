@@ -1,0 +1,41 @@
+{
+    "name": "load_customer_statement_records_test",
+    "properties": {
+        "description": "load_customer_statement_records_test",
+        "activities": [
+            {
+                "name": "load_customer_statement_records",
+                "type": "SynapseNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebook": {
+                        "referenceName": "load_customer_statement_records",
+                        "type": "NotebookReference"
+                    },
+                    "snapshot": true,
+                    "sparkPool": {
+                        "referenceName": "sparkpool",
+                        "type": "BigDataPoolReference"
+                    },
+                    "executorSize": "Small",
+                    "conf": {
+                        "spark.dynamicAllocation.enabled": false,
+                        "spark.dynamicAllocation.minExecutors": 2,
+                        "spark.dynamicAllocation.maxExecutors": 2
+                    },
+                    "driverSize": "Small",
+                    "numExecutors": 2
+                }
+            }
+        ]
+    },
+    "type": "Microsoft.Synapse/workspaces/pipelines"
+}

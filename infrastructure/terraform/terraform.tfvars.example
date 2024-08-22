@@ -1,0 +1,4 @@
+tenant_id       = "<insert your tenant id here>"
+subscription_id = "<insert your subscription id here>"
+resource_group = "<insert your resource_group here>"
+client_ip      = "<insert your client_ip here>"
